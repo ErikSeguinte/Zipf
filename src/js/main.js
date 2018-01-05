@@ -13,7 +13,22 @@ ipc.on('selected-directory', function (event, path) {
 
 
 function processFile(filename){
-  var fs = require('fs');
-  var contents = fs.readFileSync(filename, 'utf8');
-console.log(contents);
+  {
+  let fs = require('fs');
+  let contents = fs.readFileSync(filename, 'utf8');
+  contents = contents.toLowerCase();
+  let pun = contents.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+\"]/g, '');
+  pun = pun.replace(/[\n]/g,' ');
+
+  var wordArray = pun.split(' ');
+
+  }
+
+  wordArray.sort();
+
+  wordCount = {};
+
+
+
+
 }
