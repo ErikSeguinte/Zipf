@@ -12,12 +12,19 @@ let mainWindow;
 const createWindow = () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 600,
+    show: false
   });
+
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+
+  mainWindow.once('ready-to-show', () => {
+  mainWindow.show()
+})
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

@@ -8,7 +8,9 @@ selectDirBtn.addEventListener('click', function (event) {
 
 ipc.on('selected-directory', function (event, path) {
 	//document.getElementById('selected-file').innerHTML = `You selected: ${path}`
-	processFile(path[0])
+	var words = processFile(path[0])
+
+	writeHTML(words);
 })
 
 
@@ -25,24 +27,45 @@ function processFile(filename){
 	}
 
 	wordArray.sort();
+	var uniqueArray=[]
 
 	var wordCount = {};
 
 	var oldWord = wordArray[0];
 
 	wordCount[oldWord] = 0;
+	uniqueArray.push(oldWord)
 
 
 	for ( let word of wordArray) {
-		if (word === oldWord) {
+		if (word == oldWord) {
 			wordCount[word] += 1;
 		} else {
 			wordCount[word] = 1;
 			oldWord = word;
+			uniqueArray.push(word);
 		}
 
 
 	}
 
-	console.log(wordCount)
+	uniqueArray.sort( (a, b) => {
+		return wordCount[b] - wordCount[a];
+	})
+
+	return [uniqueArray, wordCount]
+}
+
+function writeHTML(words) {
+	var unique = words[0]
+	var count = words[1]
+
+	var section = document.getElementById('words');
+
+	for (let word of unique) {
+		let newHTML = word + ': ' + count[word] + '<br>';
+
+		section.insertAdjacentHTML('beforeend', newHTML);
+	}
+
 }
