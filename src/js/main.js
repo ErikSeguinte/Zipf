@@ -31,14 +31,17 @@ function processFile(filename){
 
 	var wordCount = {};
 
-	var oldWord = wordArray[0];
+	var oldWord = wordArray[0].trim();
 
 	wordCount[oldWord] = 0;
 	uniqueArray.push(oldWord)
 
 
 	for ( let word of wordArray) {
-		if (word == oldWord) {
+		word = word.trim()
+		if (word === "") {
+			continue;
+		} else if (word == oldWord) {
 			wordCount[word] += 1;
 		} else {
 			wordCount[word] = 1;
@@ -53,6 +56,8 @@ function processFile(filename){
 		return wordCount[b] - wordCount[a];
 	})
 
+	console.log(uniqueArray)
+
 	return [uniqueArray, wordCount]
 }
 
@@ -61,6 +66,7 @@ function writeHTML(words) {
 	var count = words[1]
 
 	var section = document.getElementById('words');
+	section.innerHTML = "";
 
 	for (let word of unique) {
 		let newHTML = word + ': ' + count[word] + '<br>';
