@@ -1,3 +1,4 @@
+"use strict";
 const ipc = require('electron').ipcRenderer
 
 const selectDirBtn = document.getElementById('loadFileBtn')
@@ -14,34 +15,40 @@ ipc.on('selected-directory', function (event, path) {
 })
 
 
-function processFile(filename){
+function processFile(filename) {
 	{
 		let fs = require('fs');
 		let contents = fs.readFileSync(filename, 'utf8');
 		contents = contents.toLowerCase();
-		let pun = contents.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+\"]/g, '');
-		pun = pun.replace(/[\n]/g,' ');
+		let cleaned = contents.replace(/[\u201C\u201D]/g, '"')
+		cleaned = cleaned.replace(/\.\.\./g,' '); 
+		cleaned = cleaned.replace(/—/g,' '); 
+		cleaned = cleaned.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+\"\t]/g, '');
+		cleaned = cleaned.replace(/[\n\r]/g, ' ');
 
-		var wordArray = pun.split(' ');
+		var wordArray = cleaned.split(' ');
 
 	}
 
 	wordArray.sort();
-	var uniqueArray=[]
+	var uniqueArray = []
 
 	var wordCount = {};
 
-	var oldWord = wordArray[0].trim();
+
+	var oldWord = wordArray[0];
+	oldWord = oldWord.trim();
 
 	wordCount[oldWord] = 0;
 	uniqueArray.push(oldWord)
 
 
-	for ( let word of wordArray) {
+
+	for (let word of wordArray) {
 		word = word.trim()
 		if (word === "") {
 			continue;
-		} else if (word == oldWord) {
+		} else if (word === oldWord) {
 			wordCount[word] += 1;
 		} else {
 			wordCount[word] = 1;
@@ -52,7 +59,7 @@ function processFile(filename){
 
 	}
 
-	uniqueArray.sort( (a, b) => {
+	uniqueArray.sort((a, b) => {
 		return wordCount[b] - wordCount[a];
 	})
 
@@ -68,8 +75,10 @@ function writeHTML(words) {
 	var section = document.getElementById('words');
 	section.innerHTML = "";
 
+	let i = 0
 	for (let word of unique) {
-		let newHTML = word + ': ' + count[word] + '<br>';
+		i++;
+		let newHTML = i + ": " + word + ': ' + count[word] + '<br>';
 
 		section.insertAdjacentHTML('beforeend', newHTML);
 	}
