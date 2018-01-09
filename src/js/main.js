@@ -22,8 +22,9 @@ function processFile(filename) {
 		contents = contents.toLowerCase();
 		let cleaned = contents.replace(/[\u201C\u201D]/g, '"')
 		cleaned = cleaned.replace(/\.\.\./g,' '); 
-		cleaned = cleaned.replace(/—/g,' '); 
-		cleaned = cleaned.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+\"\t]/g, '');
+		cleaned = cleaned.replace(/[—-]/g,' '); 
+		cleaned = cleaned.replace(/'s\b/g, ' ');
+		cleaned = cleaned.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()@\+\?><\[\]\+\"\t…]/g, '');
 		cleaned = cleaned.replace(/[\n\r]/g, ' ');
 
 		var wordArray = cleaned.split(' ');
