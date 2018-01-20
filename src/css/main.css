@@ -107,6 +107,7 @@ Author's custom styles
   overflow: auto;
   margin-top: 20px;
   height: 300px;
+  border-style: inset;
 }
 
 
