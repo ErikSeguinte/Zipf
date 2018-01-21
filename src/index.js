@@ -14,7 +14,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 300,
     height: 500,
-    show: false
+    show: false,
+    resizable: false,
   });
 
 
@@ -23,11 +24,11 @@ const createWindow = () => {
 
 
   mainWindow.once('ready-to-show', () => {
-  mainWindow.show()
-})
+    mainWindow.show()
+  })
 
   // Open the DevTools.
-// mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
