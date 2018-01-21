@@ -99,7 +99,7 @@ Author's custom styles
 
 
 #wrap {
-  width: 200px;
+  width: 250px;
   margin: auto;
 }
 
@@ -108,6 +108,12 @@ Author's custom styles
   margin-top: 20px;
   height: 300px;
   border-style: inset;
+}
+
+#buttons {
+  margin: auto;
+  display: flex;
+  justify-content: center
 }
 
 
