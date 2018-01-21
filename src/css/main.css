@@ -100,7 +100,7 @@ Author's custom styles
 
 #wrap {
   width: 200px;
-  margin-left: 20px
+  margin: auto;
 }
 
 #words {
